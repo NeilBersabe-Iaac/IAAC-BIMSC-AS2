@@ -31,9 +31,9 @@ lrgOpening_slider.addEventListener('touchend', onSliderChange, false);
 const loader = new Rhino3dmLoader();
 loader.setLibraryPath('https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/');
 
-// //Set up Buttons
-//     const downloadButton = document.getElementById('downloadButton');
-//     downloadButton.onclick = download;
+//Set up Buttons
+    const downloadButton = document.getElementById('downloadButton');
+    downloadButton.onclick = download;
 
 
 let rhino, definition, doc;
@@ -179,30 +179,6 @@ function onSliderChange() {
 
 
 
-        // // THREE BOILERPLATE //
-        // let scene, camera, raycaster, renderer, controls, container;
-
-        // const mouse = new THREE.Vector2()
-
-
-        // function init() {
-        // // create a scene and a camera
-
-        // THREE.Object3D.DefaultUp = new THREE.Vector3(0, 0, 1)
-
-
-        // scene = new THREE.Scene();
-        // scene.background = new THREE.Color(0x808080);
-
-
-
-        // camera = new THREE.PerspectiveCamera(
-        //     50,
-        //     window.innerWidth / window.innerHeight,
-        //     0.1,
-        //     1000
-        // );
-
 
         // camera.position.set(0, 150, 0);
         // camera.lookAt( scene.position)
@@ -212,27 +188,6 @@ function onSliderChange() {
         // container = document.getElementById('container');
         // var contWidth = container.offsetWidth;
         // var contHeight = container.offsetHeight
-
-        // // create the renderer and add it to the html
-        // renderer = new THREE.WebGLRenderer();
-        // renderer.setSize(window.innerWidth, window.innerHeight);
-        // container.appendChild(renderer.domElement);
-
-        // // add some controls to orbit the camera
-        // controls = new OrbitControls(camera, renderer.domElement);
-
-        // // add a directional light
-        // const directionalLight = new THREE.DirectionalLight(0xffffff);
-        // directionalLight.position.set( 20, 0, 100 )
-        // directionalLight.castShadow = true
-        // directionalLight.intensity = 0.95;
-        // scene.add(directionalLight);
-
-        // //const ambientLight = new THREE.AmbientLight();
-        // //scene.add(ambientLight);
-
-        // const hemisphereLight = new THREE.HemisphereLight(0x000000, 0xFFFFFF, 0.35)
-        // scene.add(hemisphereLight)
 
         // raycaster = new THREE.Raycaster()
 
@@ -328,40 +283,22 @@ function onSliderChange() {
 
         // window.addEventListener('click', onClick, false)
 
-        // function animate() {
-        // requestAnimationFrame(animate);
-        // renderer.render(scene, camera);
-        // }
-
-        // function onWindowResize() {
-        // camera.aspect = window.innerWidth / window.innerHeight;
-        // camera.updateProjectionMatrix();
-        // renderer.setSize(window.innerWidth, window.innerHeight);
-        // animate();
-        // }
-
-        // function meshToThreejs(mesh, material) {
-        // const loader = new THREE.BufferGeometryLoader();
-        // const geometry = loader.parse(mesh.toThreejsJSON());
-        // return new THREE.Mesh(geometry, material);
-        // }
-
-
-
-
 
 // BOILERPLATE //
 let scene, camera, renderer, controls;
 
 function init() {
 
+    THREE.Object3D.DefaultUp = new THREE.Vector3( 0, 0, 1 )
     // create a scene and a camera
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(1, 1, 1);
+    scene.background = new THREE.Color(0x808080);
+
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-    // camera.position.x = 0;
-    // camera.position.y = 0;
-    camera.position.z = -30;
+
+    camera.position.x = -20;
+    camera.position.y = -30;
+    camera.position.z = 45;
 
     // create the renderer and add it to the html
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -400,12 +337,12 @@ function meshToThreejs(mesh, material) {
   return new THREE.Mesh(geometry, material);
 }
 
-// // download button handler
-// function download () {
-//     let buffer = doc.toByteArray();
-//     let blob = new Blob([ buffer ], { type: "application/octect-stream" });
-//     let link = document.createElement('a');
-//     link.href = window.URL.createObjectURL(blob);
-//     link.download = 'object.obj';
-//     link.click();
-// }
+// download button handler
+function download () {
+    let buffer = doc.toByteArray();
+    let blob = new Blob([ buffer ], { type: "application/octect-stream" });
+    let link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'object.obj';
+    link.click();
+}
