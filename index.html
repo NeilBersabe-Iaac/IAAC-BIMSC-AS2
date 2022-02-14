@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>SOLIHIYA</title>
+        <style>
+            body { margin: 0; font-family: Arial, Helvetica, sans-serif; }
+            input {width: 90%;}
+            #container {position: relative;}
+            #overlay {z-index: 1; width: 100%}
+
+            #loader {
+                border: 5px solid #f3f3f3; /* Light grey */
+                border-top: 5px solid #3d3d3d; /* Grey */
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                animation: spin 1s linear infinite;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                z-index: 2;
+            }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="loader"></div> 
+        <div id="container">
+            <div id="overlay">
+
+               <div>
+                    <input type="range" id="zHeight" name="zHeight" min="0" max="0.050" value="0.015" step="0.001">
+                    <label for="zHeight">Z Height</label>
+                </div>
+                <div>
+                    <input type="range" id="solAngle" name="solAngle" min="0" max="180" value="45" step="1">
+                    <label for="solAngle">Solar Angle</label>
+                </div>
+                <div>
+                    <input type="range" id="toD" name="toD" min="1" max="9" value="5" step="1">
+                    <label for="toD">Time of Day</label>
+                </div>
+                <div>
+                    <input type="range" id="smlOpening" name="smlOpening" min="0" max="40" value="35" step="1">
+                    <label for="smlOpening">Small Opening</label>
+                </div>
+                <div>
+                    <input type="range" id="lrgOpening" name="lrgOpening" min="0" max="40" value="0" step="1">
+                    <label for="lrgOpening">Large Opening</label>
+                </div>
+                <div id="Button">
+                    <button id="downloadButton" onclick="download()" enabled>Download</button>
+                </div>
+
+
+            </div>
+        </div>
+        <script type="module" src="script.js"></script>
+    </body>
+</html>
