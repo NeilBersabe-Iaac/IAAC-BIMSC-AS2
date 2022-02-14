@@ -89,9 +89,8 @@ async function compute() {
   
   
     const res = await RhinoCompute.Grasshopper.evaluateDefinition(definition, trees);
-    console.log(res);
-    console.log(param1);
-    
+    // console.log(res);
+     
     doc = new rhino.File3dm();
 
     // hide spinner
@@ -145,17 +144,17 @@ async function compute() {
     if (child.isMesh) {
         const mat = new THREE.MeshStandardMaterial( {color: 'white',roughness: 0.01 ,transparent: true, opacity: 0.50 } )
         child.material = mat;
-            //   if (child.userData.attributes.geometry.userStringCount > 0) {5
+              if (child.userData.attributes.geometry.userStringCount > 0) {5
                 
-            //     //get color from userStrings
-            //     const colorData = child.userData.attributes.userStrings[0]
-            //     const col = colorData[1];
+                //get color from userStrings
+                const colorData = child.userData.attributes.userStrings[0]
+                const col = colorData[1];
 
-            //     //convert color from userstring to THREE color and assign it
-            //     const threeColor = new THREE.Color("rgb(" + col + ")");
-            //     const mat = new THREE.LineBasicMaterial({ color: threeColor });
-            //     child.material = mat;
-            //   }
+                //convert color from userstring to THREE color and assign it
+                const threeColor = new THREE.Color("rgb(" + col + ")");
+                const mat = new THREE.LineBasicMaterial({ color: threeColor });
+                child.material = mat;
+              }
     }
   });
 
@@ -230,21 +229,7 @@ function onSliderChange() {
         //     const object = intersects[0].object
         //     console.log(object) // debug
 
-        //     object.traverse( (child) => {
-        //         if (child.parent.userData.objectType === 'Brep') {
-        //             child.parent.traverse( (c) => {
-        //                 if (c.userData.hasOwnProperty( 'material' )) {
-        //                     c.material = selectedMaterial
-        //                 }
-        //             })
-        //         } else {
-        //             if (child.userData.hasOwnProperty( 'material' )) {
-        //                 child.material = selectedMaterial
-        //             }
-                
-                
-        //         }
-        //     })
+
 
         //     // get user strings
         //     let data, count
@@ -292,7 +277,7 @@ function init() {
     THREE.Object3D.DefaultUp = new THREE.Vector3( 0, 0, 1 )
     // create a scene and a camera
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x808080);
+    scene.background = new THREE.Color(0x3d3d3d);
 
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 
@@ -318,6 +303,26 @@ function init() {
 
     animate();
 }
+///////////////
+
+object.traverse( (child) => {
+    if (child.parent.userData.objectType === 'Brep') {
+        child.parent.traverse( (c) => {
+            if (c.userData.hasOwnProperty( 'material' )) {
+                c.material = selectedMaterial
+            }
+        })
+    } else {
+        if (child.userData.hasOwnProperty( 'material' )) {
+            child.material = selectedMaterial
+        }
+    
+    
+    }
+})
+
+
+///////////////
 
 function animate() {
     requestAnimationFrame(animate);
@@ -343,6 +348,6 @@ function download () {
     let blob = new Blob([ buffer ], { type: "application/octect-stream" });
     let link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.download = 'object.obj';
+    link.download = 'solihiya.3dm';
     link.click();
 }

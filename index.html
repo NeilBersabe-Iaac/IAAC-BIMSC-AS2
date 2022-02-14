@@ -2,64 +2,56 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>SOLIHIYA</title>
-        <style>
-            body { margin: 0; font-family: Arial, Helvetica, sans-serif; }
-            input {width: 90%;}
-            #container {position: relative;}
-            #overlay {z-index: 1; width: 100%}
+        <title>S O L I H I Y A</title>
 
-            #loader {
-                border: 5px solid #f3f3f3; /* Light grey */
-                border-top: 5px solid #3d3d3d; /* Grey */
-                border-radius: 50%;
-                width: 40px;
-                height: 40px;
-                animation: spin 1s linear infinite;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                z-index: 2;
-            }
-
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-        </style>
+        <link rel="stylesheet" href="style.css">
+        
     </head>
     <body>
         <div id="loader"></div> 
-        <div id="container">
-            <div id="overlay">
+        <div id="header00">            
+            <div id="logo">
+                <h1>S O L I H I Y A</h1> 
+                <br><div class="text1">Asgmt 03 - Neil John Bersabe <br>
+                     A parametric attractor skin </div>
 
-               <div>
-                    <input type="range" id="zHeight" name="zHeight" min="0" max="0.250" value="0.135" step="0.001">
-                    <label for="zHeight">Z Height</label>
-                </div>
-                <div>
-                    <input type="range" id="solAngle" name="solAngle" min="0" max="180" value="150" step="1">
-                    <label for="solAngle">Solar Angle</label>
-                </div>
-                <div>
-                    <input type="range" id="toD" name="toD" min="1" max="9" value="5" step="1">
-                    <label for="toD">Time of Day</label>
-                </div>
-                <div>
-                    <input type="range" id="smlOpening" name="smlOpening" min="0" max="45" value="5" step="1">
-                    <label for="smlOpening">Small Opening</label>
-                </div>
-                <div>
-                    <input type="range" id="lrgOpening" name="lrgOpening" min="0" max="45" value="35" step="1">
-                    <label for="lrgOpening">Large Opening</label>
-                </div>
-                <div id="Button">
-                    <button id="downloadButton" onclick="download()" enabled> Download </button>
-                </div>
-
+                    <img src="./assets/iaac_logo.png" width="120px">
+                    
+                    
+            </div>
+            <div id="container">
+                <div id="overlay">
+                    <br>
+                    <div>
+                        <input type="range" id="zHeight" class="slider0" name="zHeight" min="0" max="0.250" value="0.135" step="0.001">
+                        <label for="zHeight">Z Height</label>
+                    </div>
+                    <div>
+                        <input type="range" id="solAngle" class="slider0" name="solAngle" min="0" max="180" value="150" step="1">
+                        <label for="solAngle">Solar Angle</label>
+                    </div>
+                    <div>
+                        <input type="range" id="toD" class="slider0" name="toD" min="1" max="9" value="5" step="1">
+                        <label for="toD">Time of Day</label>
+                    </div>
+                    <div>
+                        <input type="range" id="smlOpening" class="slider0" name="smlOpening" min="0" max="45" value="5" step="1">
+                        <label for="smlOpening">Small Opening</label>
+                    </div>
+                    <div>
+                        <input type="range" id="lrgOpening" class="slider0" name="lrgOpening" min="0" max="45" value="35" step="1">
+                        <label for="lrgOpening">Large Opening</label>
+                    </div><br>
+                    <div id="Button">
+                        <button id="downloadButton" onclick="download()" enabled> 
+                        Download </button>
+                    </div>
 
             </div>
+            </div>
         </div>
+        <div id="container02">
         <script type="module" src="script.js"></script>
+        </div>
     </body>
 </html>
