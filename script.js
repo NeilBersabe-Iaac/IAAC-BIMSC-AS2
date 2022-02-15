@@ -146,7 +146,7 @@ async function compute() {
 
 object.traverse((child) => {
     if (child.isMesh) {
-        const mat = new THREE.MeshStandardMaterial( {color: 'white',roughness: 0.01 ,transparent: true, opacity: 0.50 } )
+        const mat = new THREE.MeshStandardMaterial( {color: (0x202020),roughness: 0.01 ,transparent: true, opacity: 0.50 } )
         child.material = mat;
               if (child.userData.attributes.geometry.userStringCount > 0) {
                 
@@ -180,7 +180,13 @@ object.traverse((child) => {
     }
   });
 
-
+  object.traverse((child) => {
+    if (child.isBrep) {
+        const mat = new THREE.MeshStandardMaterial( {color: (0x000000),roughness: 0.01 ,transparent: true, opacity: 1 } )
+        child.material = mat;
+              
+    }
+  });
 ////////////////////////////////////////////
 
         scene.add(object);
@@ -299,13 +305,27 @@ function init() {
     THREE.Object3D.DefaultUp = new THREE.Vector3( 0, 0, 1 )
     // create a scene and a camera
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x3d3d3d);
 
+
+    ///////////////////////////
+    ////Scene Background
+    let material, cubeMap
+    cubeMap = new THREE.CubeTextureLoader()
+    .setPath('./assets/')
+    .load( [ 'px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png' ] )
+    scene.background = cubeMap
+
+
+    // scene.background = new THREE.Color(0x1f1f1f);
+
+
+    ////////////////////////////
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 
     camera.position.x = -20;
     camera.position.y = -30;
     camera.position.z = 45;
+
 
     // create the renderer and add it to the html
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -314,6 +334,24 @@ function init() {
 
     // add some controls to orbit the camera
     controls = new OrbitControls(camera, renderer.domElement);
+    controls.autoRotate = true;
+    
+
+   ///////////////////
+        //controls.update() must be called after any manual changes to the camera's transform
+        // camera.position.set( 0, 20, 100 );
+    //     controls.update();
+
+    //     function animate() {
+
+    //         requestAnimationFrame( animate );
+
+    //         // required if controls.enableDamping or controls.autoRotate are set to true
+    //         controls.update();
+
+	// renderer.render( scene, camera );
+
+   ///////////////////
 
     // add a directional light
     const directionalLight = new THREE.DirectionalLight(0xffffff);
@@ -327,28 +365,96 @@ function init() {
 }
 ///////////////
 
-object.traverse( (child) => {
-    if (child.parent.userData.objectType === 'Brep') {
-        child.parent.traverse( (c) => {
-            if (c.userData.hasOwnProperty( 'material' )) {
-                c.material = selectedMaterial
-            }
-        })
-    } else {
-        if (child.userData.hasOwnProperty( 'material' )) {
-            child.material = selectedMaterial
-        }
+// object.traverse( (child) => {
+//     if (child.parent.userData.objectType === 'Brep') {
+//         child.parent.traverse( (c) => {
+//             if (c.userData.hasOwnProperty( 'material' )) {
+//                 c.material = selectedMaterial
+//             }
+//         })
+//     } else {
+//         if (child.userData.hasOwnProperty( 'material' )) {
+//             child.material = selectedMaterial
+//         }
     
     
-    }
-})
+//     }
+// })
+////////////////
+
+// if (intersects.length > 0) {
+
+//     // get closest object
+//     const object = intersects[0].object
+//     console.log(object) // debug
+
+//     object.traverse( (child) => {
+//         if (child.parent.userData.objectType === 'Brep') {
+//             child.parent.traverse( (c) => {
+//                 if (c.userData.hasOwnProperty( 'material' )) {
+//                     c.material = selectedMaterial
+//                 }
+//             })
+//         } else {
+//             if (child.userData.hasOwnProperty( 'material' )) {
+//                 child.material = selectedMaterial
+//             }
+        
+        
+//         }
+//     })
+
+//     // get user strings
+//     let data, count
+//     if (object.userData.attributes !== undefined) {
+//         data = object.userData.attributes.userStrings
+//     } else {
+//         // breps store user strings differently...
+//         data = object.parent.userData.attributes.userStrings
+//     }
+
+    
+//     // create container div with table inside
+//     container_clck = document.createElement( 'div' )
+//     container_clck.id = 'container_clck'
+    
+//     const table = document.createElement( 'table' )
+//     container_clck.appendChild( table )
+
+//     for ( let i = 0; i < data.length; i ++ ) {
+
+//         const row = document.createElement( 'tr' )
+//         row.innerHTML = `<td>${data[ i ][ 0 ]}</td><td>${data[ i ][ 1 ]}</td>`
+//         table.appendChild( row )
+//     }
+
+//     container_att = document.getElementById('sidebar')
+//     container_att.appendChild( container_clck )
+// }
+
+
+
 
 ///////////////
 
+// function animate() {
+//     requestAnimationFrame(animate);
+//     renderer.render(scene, camera);
+// }
 function animate() {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
+
+    requestAnimationFrame( animate )
+
+    // rotate torus a little bit each frame
+    scene.rotation.z += 0.0002
+    scene.rotation.y += 0.000
+    scene.rotation.x += 0.000
+
+    renderer.render( scene, camera )
+
 }
+
+
 
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
