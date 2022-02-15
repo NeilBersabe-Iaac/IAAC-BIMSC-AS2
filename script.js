@@ -121,6 +121,10 @@ async function compute() {
             const g_userStrings = rhinoObject.geometry().getUserStrings()
             rhinoObject.attributes().setUserString(g_userStrings[0][0], g_userStrings[0][1])
             
+            ////////////////////////////////////////////////////////////
+            const length = rhinoObject.geometry().getUserStrings()[1]
+            console.log(length)
+            ////////////////////////////////////////////////////////////
         }
     }
 
@@ -140,12 +144,13 @@ async function compute() {
 
   // go through all objects, check for userstrings and assing colors
 
-  object.traverse((child) => {
+object.traverse((child) => {
     if (child.isMesh) {
         const mat = new THREE.MeshStandardMaterial( {color: 'white',roughness: 0.01 ,transparent: true, opacity: 0.50 } )
         child.material = mat;
-              if (child.userData.attributes.geometry.userStringCount > 0) {5
+              if (child.userData.attributes.geometry.userStringCount > 0) {
                 
+
                 //get color from userStrings
                 const colorData = child.userData.attributes.userStrings[0]
                 const col = colorData[1];
@@ -158,10 +163,27 @@ async function compute() {
     }
   });
 
+  object.traverse((child) => {
+    if (child.isLine) {
+
+      if (child.userData.attributes.geometry.userStringCount > 0) {
+        
+        //get color from userStrings
+        const colorData = child.userData.attributes.userStrings[0]
+        const col = colorData[1];
+
+        //convert color from userstring to THREE color and assign it
+        const threeColor = new THREE.Color("rgb(" + col + ")");
+        const mat = new THREE.LineBasicMaterial({ color: threeColor });
+        child.material = mat;
+      }
+    }
+  });
+
+
 ////////////////////////////////////////////
 
         scene.add(object);
-        // hide spinner
 
 
     })
@@ -320,7 +342,6 @@ object.traverse( (child) => {
     
     }
 })
-
 
 ///////////////
 
